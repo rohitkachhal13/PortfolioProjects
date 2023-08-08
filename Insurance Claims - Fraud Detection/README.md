@@ -1,1 +1,1 @@
-Insurance Claims - Frauf Detection
+Insurance Claims - Fraud Detection
