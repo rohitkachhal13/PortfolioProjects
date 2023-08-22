@@ -4,8 +4,8 @@ Rules to analyze the Student Performance:
 •	The calculation for different parameter based on class.
 •	Exam type for class 3 to 9 & 11 is “UT1”. However, for class 10 & 12 it is “FE1”
 •	If parameter is “FA”:
-        o	For class 3 to 5 “FA” max marks is 5 in case of subject ‘Math’ & ‘EVS’ & for rest subject “FA” max marks is 10.
-        o	For class 6 to 10 “FA” max marks is 5 in case of subject ‘Math’ & ‘Science’ & for rest subject “FA” max marks is 10.
+        o	For class 3 to 4 “FA” max marks is 5 in case of subject ‘Math’ & ‘EVS’ & for rest subject “FA” max marks is 10.
+        o	For class 5 to 10 “FA” max marks is 5 in case of subject ‘Math’ & ‘Science’ & for rest subject “FA” max marks is 10.
         o	 For class 11 & 12 “FA” max marks is 5.
 •	If parameter is “PS”: For all subjects of all class max marks is 5.
 •	If parameter is “P”: For all subjects of all class max marks is 5.
@@ -193,11 +193,17 @@ ORDER BY impact_user_id
 SELECT Subject,Exam_Type,Result_Parameter,impact_user_id,impact_user_name,impact_user_class_section,Major_Class,course_id,ROUND(SUM(M_Marks),1) as FA_M_Marks, ROUND(SUM(FA_Mark),1) as FA_Total_Marks,
 
 CASE 
-WHEN (Exam_Type = 'UT1' AND Subject !='MATH' AND Subject != 'EVS' AND (Major_Class = 'III' OR Major_Class = 'IV' OR Major_Class = 'V'))
+WHEN (Exam_Type = 'UT1' AND Subject !='MATH' AND Subject != 'EVS' AND (Major_Class = 'III' OR Major_Class = 'IV'))
 THEN ROUND((SUM(FA_Mark)/SUM(M_Marks))*10,1)
 
-WHEN (Exam_Type = 'UT1' AND Subject ='MATH' OR Subject = 'EVS' AND (Major_Class = 'III' OR Major_Class = 'IV' OR Major_Class = 'V'))
+WHEN (Exam_Type = 'UT1' AND Subject ='MATH' OR Subject = 'EVS' AND (Major_Class = 'III' OR Major_Class = 'IV'))
 THEN ROUND((SUM(FA_Mark)/SUM(M_Marks))*5,1)
+
+WHEN (Exam_Type = 'UT1' AND Subject !='MATH' AND Subject != 'SCIENCE' AND (Major_Class = 'V'))
+THEN ROUND((SUM(FA_Mark)/SUM(M_Marks))*10,1)
+
+WHEN (Exam_Type = 'UT1' AND Subject ='MATH' OR Subject = 'SCIENCE' AND (Major_Class = 'V'))
+THEN ROUND((SUM(FA_Mark)/SUM(M_Marks))*5,1)        
 
 WHEN (Exam_Type = 'UT1' AND Subject !='MATH' AND Subject != 'SCIENCE' AND (Major_Class = 'VI' OR Major_Class = 'VII' OR Major_Class = 'VIII' OR Major_Class = 'IX'))
 THEN ROUND((SUM(FA_Mark)/SUM(M_Marks))*10,1)
